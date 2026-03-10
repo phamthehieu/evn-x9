@@ -51,7 +51,40 @@ Master modern Angular development with Signals, Standalone Components, Zoneless 
 
 ---
 
-## 1. Signals: The New Reactive Primitive
+## 1. Ưu tiên UI với PrimeNG + PrimeUIX
+
+Khi xây UI cho dự án Angular này:
+
+- **Ưu tiên** sử dụng các component của **PrimeNG** (đã cấu hình theme bằng `@primeuix/themes` – preset Aura hoặc preset tuỳ biến) thay vì thẻ HTML thuần cho:
+  - Button, input, select, checkbox, radio, textarea, slider
+  - Dialog, sidebar/drawer, toast, confirm, overlay
+  - Table, paginator, dataview, list, menu, tabs, breadcrumb, steps
+  - Card, panel, accordion, toolbar, tag, chip, badge…
+- Chỉ dùng **HTML thuần** cho:
+  - Layout cơ bản (wrapper, section, grid CSS, semantic tags như `header`, `main`, `footer`, `section`, `article`)
+  - Những phần tử mà PrimeNG **không có component tương ứng** hoặc khi cần HTML rất đơn giản (ví dụ icon standalone, wrapper nhỏ).
+
+### Nguyên tắc khi gợi ý mã
+
+- Khi người dùng yêu cầu:
+  - “tạo nút bấm”, “tạo form đăng nhập/đăng ký/tìm kiếm”, “làm bảng dữ liệu”, “làm modal / popup / sidebar”, “làm menu / tabs / breadcrumb”…  
+    → **Gợi ý PrimeNG trước**, ví dụ:
+    - `p-button`, `ButtonModule` cho nút
+    - `InputTextModule`, `PasswordModule`, `DropdownModule`, `CalendarModule`, `InputNumberModule` cho control form
+    - `TableModule`, `PaginatorModule` cho bảng
+    - `DialogModule`, `SidebarModule`, `ToastModule`, `ConfirmDialogModule` cho overlay
+    - `TabViewModule`, `MenubarModule`, `TieredMenuModule`, `BreadcrumbModule` cho điều hướng
+  - Chỉ khi người dùng **yêu cầu rõ ràng không dùng PrimeNG** hoặc đang chỉnh thuần CSS/HTML thì mới dùng thẻ HTML mặc định.
+- Khi viết ví dụ template, ưu tiên:
+  - Sử dụng selector `p-...` (ví dụ `<p-button>`, `<p-inputText>`, `<p-dialog>`…) thay vì `button`, `input`, `select` thuần nếu ngữ cảnh là UI/UX.
+  - Cú pháp module tương ứng của PrimeNG trong `imports` của component standalone.
+- Với theme:
+  - Giả định ứng dụng đã dùng `providePrimeNG({ theme: { preset: Aura } })` hoặc preset khác từ `@primeuix/themes`.
+  - Nếu cần đổi màu / theming → gợi ý tạo preset riêng với `definePreset(Aura, { ... })` trong một file theme riêng, thay vì override CSS thủ công.
+
+---
+
+## 2. Signals: The New Reactive Primitive
 
 Signals are Angular's fine-grained reactivity system, replacing zone.js-based change detection.
 
