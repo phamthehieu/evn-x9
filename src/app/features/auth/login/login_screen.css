@@ -1,0 +1,196 @@
+.evn-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    circle at top right,
+    color-mix(in srgb, var(--bg-main) 35%, white) 0%,
+    var(--bg-main) 50%,
+    color-mix(in srgb, var(--bg-main) 35%, var(--evn-blue)) 100%
+  );
+}
+
+.evn-login-container {
+  width: min(440px, calc(100vw - 2rem));
+}
+
+.evn-login-card {
+  border-radius: 10px;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.05),
+    0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
+
+.evn-brand {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding-top: 6px;
+  padding-bottom: 18px;
+}
+
+.evn-logo {
+  height: 160px;
+  width: auto;
+  user-select: none;
+}
+
+.evn-title {
+  text-align: center;
+}
+
+.evn-title__headline {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-dark);
+}
+
+.evn-title__sub {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.evn-form {
+  display: grid;
+  gap: 14px;
+}
+
+.evn-field {
+  display: grid;
+  gap: 8px;
+}
+
+.evn-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.evn-input-with-icon {
+  position: relative;
+}
+
+.evn-input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: color-mix(in srgb, var(--text-gray) 70%, black);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* PrimeNG render DOM nội bộ -> cần ::ng-deep để override chắc chắn */
+:host ::ng-deep .evn-input-with-icon :is(.p-inputtext, .p-password-input) {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, white 70%, var(--bg-main));
+  color: var(--text-dark);
+  padding: 0.9rem 0.9rem;
+  padding-left: 2.6rem; /* chừa chỗ cho Lucide icon bên trái */
+  box-shadow: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+:host ::ng-deep .evn-input-with-icon :is(.p-inputtext, .p-password-input)::placeholder {
+  color: color-mix(in srgb, var(--text-gray) 85%, black);
+}
+
+:host ::ng-deep .evn-input-with-icon :is(.p-inputtext, .p-password-input):enabled:hover {
+  border-color: color-mix(in srgb, var(--evn-blue) 35%, var(--border));
+}
+
+:host ::ng-deep .evn-input-with-icon :is(.p-inputtext, .p-password-input):focus {
+  outline: none;
+  border-color: var(--evn-blue);
+  box-shadow: 0 0 0 4px rgba(56, 83, 164, 0.14);
+  background: white;
+}
+
+/* Password control layout */
+:host ::ng-deep .evn-input-with-icon .p-password {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+/* Chừa chỗ icon mắt của PrimeNG ở bên phải */
+:host ::ng-deep .evn-input-with-icon .p-password-input {
+  padding-right: 2.6rem;
+}
+
+:host ::ng-deep .evn-input-with-icon .p-password-toggle-mask {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+
+:host ::ng-deep .evn-input-with-icon .p-password-toggle-mask:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(56, 83, 164, 0.14);
+  border-radius: 8px;
+}
+
+:host ::ng-deep .evn-input-with-icon .p-password .p-password-toggle-mask-icon,
+:host ::ng-deep .evn-input-with-icon .p-password .p-password-toggle-mask {
+  color: color-mix(in srgb, var(--text-gray) 75%, black);
+}
+
+:host ::ng-deep .evn-input-with-icon .p-password .p-password-toggle-mask-icon:hover,
+:host ::ng-deep .evn-input-with-icon .p-password .p-password-toggle-mask:hover {
+  color: var(--evn-blue);
+}
+
+.evn-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2px;
+}
+
+.evn-remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.evn-remember__label {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.evn-submit {
+  margin-top: 6px;
+}
+
+.evn-footer {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: var(--text-gray);
+}
+
+.evn-footer a {
+  color: var(--evn-blue);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.evn-footer a:hover {
+  text-decoration: underline;
+}
+

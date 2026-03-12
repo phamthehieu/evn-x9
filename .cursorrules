@@ -4,6 +4,9 @@
 Bạn là một chuyên gia Senior Angular với tư duy hệ thống cao. Khi làm việc trong dự án này, hãy tuân thủ nghiêm ngặt các nguyên tắc sau:
 
 ## 1. Kiến trúc và Tổ chức Code (Architecture)
+- **Thiết kế UI:** Sử dụng PrimeNG + PrimeUIX để xây dựng UI.
+- **Định dạng code:** Sử dụng ESLint để định dạng code.
+- **Sử dụng icon từ Lucide Angular.
 - **Modular Architecture:** Luôn tuân thủ cấu trúc Core/Features/Layout/Shared như đã setup trong `src/app/`.
 - **Lazy Loading:** Mọi feature mới trong `src/app/features/` BẮT BUỘC phải được cấu hình Lazy Loading để tối ưu hiệu suất.
 - **Signals Over RxJS:** Ưu tiên sử dụng **Angular Signals** cho việc quản lý state cục bộ và đồng bộ dữ liệu thay vì RxJS (trừ các trường hợp stream dữ liệu phức tạp).

@@ -1,0 +1,500 @@
+<!doctype html>
+
+<html lang="vi">
+  <head>
+    <!-- Thiết lập metadata cơ bản cho trang HTML5 và tiêu đề màn hình Action Center -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ProManage - Action Center</title>
+    <!-- Sử dụng Tailwind CSS qua CDN (kèm plugin forms, container-queries) để dựng layout, màu sắc, responsive -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Sử dụng Google Fonts: Inter làm font chữ chính cho toàn bộ giao diện -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Sử dụng bộ icon Material Symbols Outlined từ Google cho các icon trong sidebar, header, bảng và nút thao tác -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Cấu hình Tailwind custom: màu thương hiệu EVN, font, border-radius... để tái sử dụng trong toàn màn hình -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#3853a3',
+              'evn-blue': '#3853a4',
+              'evn-red': '#ed1c24',
+              'text-dark': '#1b2559',
+              'background-light': '#f4f7fe',
+              'background-dark': '#14171e',
+            },
+            fontFamily: {
+              display: ['Inter', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '10px',
+              lg: '10px',
+              xl: '12px',
+              full: '9999px',
+            },
+          },
+        },
+      };
+    </script>
+    <!-- CSS nội tuyến bổ sung cho font-family body và cấu hình hiển thị icon Material -->
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+    </style>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark font-display text-text-dark">
+    <!-- Toàn bộ layout dùng flex + h-screen để chia 2 cột: sidebar điều hướng và phần nội dung chính -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar: điều hướng chính, sử dụng Tailwind cho màu sắc, border, flex và icon Material -->
+      <aside
+        class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0"
+      >
+        <div class="p-6 flex items-center gap-3">
+          <div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+            <span class="material-symbols-outlined">account_tree</span>
+          </div>
+          <div>
+            <h1 class="text-text-dark dark:text-slate-100 font-bold text-lg leading-tight">
+              ProManage
+            </h1>
+            <p class="text-slate-500 dark:text-slate-400 text-xs">Quản lý dự án</p>
+          </div>
+        </div>
+        <nav class="flex-1 px-4 space-y-1">
+          <a
+            class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="text-sm font-medium">Dashboard</span>
+          </a>
+          <a
+            class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined">work</span>
+            <span class="text-sm font-medium">Dự án</span>
+          </a>
+          <a
+            class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-lg transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined">bolt</span>
+            <span class="text-sm font-bold">Hoạt động</span>
+          </a>
+          <a
+            class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined">description</span>
+            <span class="text-sm font-medium">Báo cáo</span>
+          </a>
+          <a
+            class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined">settings</span>
+            <span class="text-sm font-medium">Cài đặt</span>
+          </a>
+        </nav>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-3 p-2">
+            <div class="size-8 rounded-full bg-slate-200 overflow-hidden">
+              <img
+                class="w-full h-full object-cover"
+                data-alt="Avatar of project manager"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5Xv1Twn1cQDZUHsnup2qGMomhCu3ZeGBhtYttFrppz4b9VdLHEG3peswxqapD-yo8M6ABAYDbyT9CCbHfCsbxyWBUmCf7YPLixiJig3Xf0huaizbMHAYN_NyJgCkITqL2k7e0A6tNJEO9_zazdphDTdk-Jvd0v3ppEvRa6BrGeF0UkhBVYK6Jj1DLyzxZR-PrJBxYVWYMVD4m85y6aReD42FVkh1weRlwJZRAFymXkrQe3gAXg07-qKOJ7OwxoBjwz-wTA7psiC8"
+              />
+            </div>
+            <div class="flex-1 overflow-hidden">
+              <p class="text-sm font-semibold truncate dark:text-slate-200">Nguyễn Văn A</p>
+              <p class="text-xs text-slate-500 truncate">Quản trị viên</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content: phần nội dung chính gồm header + vùng hiển thị tab Hoạt động -->
+      <main class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header: tiêu đề trang, breadcrumb/tab con, ô tìm kiếm và icon thông báo -->
+        <header
+          class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 shrink-0"
+        >
+          <div class="flex items-center gap-4">
+            <h2 class="text-lg font-bold text-text-dark dark:text-slate-100">Chi tiết dự án</h2>
+            <div class="h-4 w-px bg-slate-200 mx-2"></div>
+            <nav class="hidden md:flex items-center gap-6">
+              <a
+                class="text-sm font-medium text-slate-500 hover:text-primary transition-colors"
+                href="#"
+                >Tổng quan</a
+              >
+              <a
+                class="text-sm font-medium text-slate-500 hover:text-primary transition-colors"
+                href="#"
+                >Thành viên</a
+              >
+              <a
+                class="text-sm font-medium text-slate-500 hover:text-primary transition-colors"
+                href="#"
+                >Tài liệu</a
+              >
+              <a class="text-sm font-bold text-primary border-b-2 border-primary py-5" href="#"
+                >Hoạt động</a
+              >
+            </nav>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="relative hidden lg:block">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"
+                >search</span
+              >
+              <input
+                class="bg-background-light dark:bg-slate-800 border-none rounded-full pl-10 pr-4 py-2 text-sm w-64 focus:ring-2 focus:ring-primary/20"
+                placeholder="Tìm kiếm công việc..."
+                type="text"
+              />
+            </div>
+            <button
+              class="size-10 flex items-center justify-center rounded-full bg-background-light dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+            </button>
+          </div>
+        </header>
+        <!-- Activity Content: vùng nội dung tab Hoạt động, scroll độc lập với sidebar -->
+        <section class="flex-1 overflow-y-auto p-8">
+          <div class="max-w-6xl mx-auto space-y-6">
+            <!-- Page Title: tiêu đề tab, mô tả nghiệp vụ và nhóm nút lọc trạng thái công việc -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h3 class="text-3xl font-black text-text-dark dark:text-slate-100 tracking-tight">
+                  Tab Hoạt động
+                </h3>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">
+                  Quản lý và theo dõi tiến độ thực hiện công việc thực tế trong thời gian thực.
+                </p>
+              </div>
+              <div
+                class="flex bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-200 dark:border-slate-800"
+              >
+                <button class="px-4 py-2 text-sm font-bold text-primary bg-primary/10 rounded">
+                  Tất cả
+                </button>
+                <button
+                  class="px-4 py-2 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 rounded"
+                >
+                  Đang thực hiện
+                </button>
+                <button
+                  class="px-4 py-2 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 rounded"
+                >
+                  Đã hoàn thành
+                </button>
+              </div>
+            </div>
+            <!-- Active Task Summary Card: 3 thẻ KPI (tổng thời gian, số việc hoàn thành, số việc đang thực hiện) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div
+                class="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4"
+              >
+                <div
+                  class="size-12 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-evn-blue"
+                >
+                  <span class="material-symbols-outlined">timer</span>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">
+                    Tổng thời gian
+                  </p>
+                  <p class="text-xl font-bold dark:text-slate-100">08:45:00</p>
+                </div>
+              </div>
+              <div
+                class="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4"
+              >
+                <div
+                  class="size-12 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600"
+                >
+                  <span class="material-symbols-outlined">check_circle</span>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">
+                    Hoàn thành
+                  </p>
+                  <p class="text-xl font-bold dark:text-slate-100">12 / 15</p>
+                </div>
+              </div>
+              <div
+                class="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4"
+              >
+                <div
+                  class="size-12 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-evn-red"
+                >
+                  <span class="material-symbols-outlined">pending_actions</span>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">
+                    Đang thực hiện
+                  </p>
+                  <p class="text-xl font-bold dark:text-slate-100">03</p>
+                </div>
+              </div>
+            </div>
+            <!-- Task List Table: bảng danh sách công việc, thời gian thực tế và các nút điều khiển bắt đầu/kết thúc -->
+            <div
+              class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden"
+            >
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50 dark:bg-slate-800/50">
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider"
+                      >
+                        Nội dung công việc
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider"
+                      >
+                        Thời gian thực tế
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right"
+                      >
+                        Thao tác điều khiển
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                    <!-- Row 1: công việc thiết kế UI/UX -->
+                    <tr
+                      class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+                    >
+                      <td class="px-6 py-6">
+                        <div class="flex flex-col">
+                          <span class="text-sm font-bold text-text-dark dark:text-slate-200"
+                            >Thiết kế giao diện UI/UX cho module quản lý dự án EVN</span
+                          >
+                          <span class="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-xs">label</span> Giao diện
+                            người dùng
+                          </span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-6">
+                        <div class="flex items-center gap-2">
+                          <span class="material-symbols-outlined text-primary text-sm"
+                            >schedule</span
+                          >
+                          <span class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                            >02 giờ 15 phút</span
+                          >
+                        </div>
+                      </td>
+                      <td class="px-6 py-6 text-right">
+                        <div class="flex items-center justify-end gap-3">
+                          <button
+                            class="bg-[#10b981] hover:bg-[#059669] text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">play_arrow</span>
+                            Bắt đầu
+                          </button>
+                          <button
+                            class="bg-evn-red hover:opacity-90 text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">stop</span>
+                            Kết thúc
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Row 2: công việc phát triển API Backend Core -->
+                    <tr
+                      class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+                    >
+                      <td class="px-6 py-6">
+                        <div class="flex flex-col">
+                          <span class="text-sm font-bold text-text-dark dark:text-slate-200"
+                            >Phát triển API kết nối dữ liệu hệ thống tập trung</span
+                          >
+                          <span class="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-xs">label</span> Backend
+                            Core
+                          </span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-6">
+                        <div class="flex items-center gap-2">
+                          <span class="material-symbols-outlined text-primary text-sm"
+                            >schedule</span
+                          >
+                          <span class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                            >05 giờ 40 phút</span
+                          >
+                        </div>
+                      </td>
+                      <td class="px-6 py-6 text-right">
+                        <div class="flex items-center justify-end gap-3">
+                          <button
+                            class="bg-[#10b981] hover:bg-[#059669] text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">play_arrow</span>
+                            Bắt đầu
+                          </button>
+                          <button
+                            class="bg-evn-red hover:opacity-90 text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">stop</span>
+                            Kết thúc
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Row 3: công việc kiểm thử hiệu năng & bảo mật -->
+                    <tr
+                      class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+                    >
+                      <td class="px-6 py-6">
+                        <div class="flex flex-col">
+                          <span class="text-sm font-bold text-text-dark dark:text-slate-200"
+                            >Kiểm thử hiệu năng và bảo mật hệ thống (Penetration Test)</span
+                          >
+                          <span class="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-xs">label</span> Bảo mật
+                          </span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-6">
+                        <div class="flex items-center gap-2">
+                          <span class="material-symbols-outlined text-primary text-sm"
+                            >schedule</span
+                          >
+                          <span class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                            >01 giờ 20 phút</span
+                          >
+                        </div>
+                      </td>
+                      <td class="px-6 py-6 text-right">
+                        <div class="flex items-center justify-end gap-3">
+                          <button
+                            class="bg-[#10b981] hover:bg-[#059669] text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">play_arrow</span>
+                            Bắt đầu
+                          </button>
+                          <button
+                            class="bg-evn-red hover:opacity-90 text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">stop</span>
+                            Kết thúc
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Row 4: công việc họp tổng kết & phân chia công việc -->
+                    <tr
+                      class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+                    >
+                      <td class="px-6 py-6">
+                        <div class="flex flex-col">
+                          <span class="text-sm font-bold text-text-dark dark:text-slate-200"
+                            >Họp tổng kết tiến độ và phân chia công việc giai đoạn 2</span
+                          >
+                          <span class="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-xs">label</span> Quản lý
+                          </span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-6">
+                        <div class="flex items-center gap-2">
+                          <span class="material-symbols-outlined text-primary text-sm"
+                            >schedule</span
+                          >
+                          <span class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                            >03 giờ 05 phút</span
+                          >
+                        </div>
+                      </td>
+                      <td class="px-6 py-6 text-right">
+                        <div class="flex items-center justify-end gap-3">
+                          <button
+                            class="bg-[#10b981] hover:bg-[#059669] text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">play_arrow</span>
+                            Bắt đầu
+                          </button>
+                          <button
+                            class="bg-evn-red hover:opacity-90 text-white px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95"
+                          >
+                            <span class="material-symbols-outlined text-lg">stop</span>
+                            Kết thúc
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Pagination / Footer Actions: hiển thị số lượng công việc và nhóm nút phân trang -->
+            <div class="flex items-center justify-between pt-4 pb-12">
+              <p class="text-sm text-slate-500">
+                Hiển thị <span class="font-bold">4</span> trên
+                <span class="font-bold">24</span> công việc
+              </p>
+              <div class="flex gap-2">
+                <button
+                  class="size-9 flex items-center justify-center rounded border border-slate-200 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-base">chevron_left</span>
+                </button>
+                <button
+                  class="size-9 flex items-center justify-center rounded border border-primary bg-primary text-white text-sm font-bold"
+                >
+                  1
+                </button>
+                <button
+                  class="size-9 flex items-center justify-center rounded border border-slate-200 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
+                >
+                  2
+                </button>
+                <button
+                  class="size-9 flex items-center justify-center rounded border border-slate-200 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
+                >
+                  3
+                </button>
+                <button
+                  class="size-9 flex items-center justify-center rounded border border-slate-200 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-base">chevron_right</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

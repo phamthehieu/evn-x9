@@ -1,0 +1,39 @@
+/* Custom scrollbar (sidebar / any internal scroll areas) */
+:host ::-webkit-scrollbar {
+  width: 4px;
+}
+
+:host ::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+/* Badge trạng thái */
+.status-badge-success {
+  background-color: #def7ec;
+  color: #03543f;
+}
+
+.status-badge-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge-error {
+  background-color: #fde8e8;
+  color: #9b1c1c;
+}
+
+/* Progress bar */
+.progress-bar-bg {
+  background-color: #e5e7eb;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.progress-bar-fill {
+  background-color: var(--evn-blue);
+  height: 8px;
+  border-radius: 4px;
+}
+

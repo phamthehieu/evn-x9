@@ -1,0 +1,222 @@
+<div class="bg-[var(--bg-main)] font-sans text-gray-800 min-h-screen flex overflow-x-hidden">
+
+  <main class="flex-1 p-8">
+    <header class="mb-8" data-purpose="page-header">
+      <h1 class="text-3xl font-bold text-slate-800">Bảng Điều Khiển Dự Án</h1>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" data-purpose="summary-stats">
+      @for (card of summaryCards; track card.label) {
+        <p-card styleClass="rounded-[10px] shadow-sm">
+          <ng-template pTemplate="content">
+            <div class="flex items-center">
+              <div
+                class="w-12 h-12 rounded-lg flex items-center justify-center mr-4"
+                [class]="card.iconBgClass + ' ' + card.iconTextClass"
+              >
+                @if (card.label === 'Tổng số dự án') {
+                  <lucide-icon [img]="icons.totalProjects" [size]="22" />
+                } @else if (card.label === 'Đang thực hiện') {
+                  <lucide-icon [img]="icons.inProgress" [size]="22" />
+                } @else if (card.label === 'Trễ hạn SLA') {
+                  <lucide-icon [img]="icons.slaLate" [size]="22" />
+                } @else {
+                  <lucide-icon [img]="icons.workMonth" [size]="22" />
+                }
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">{{ card.label }}</p>
+                <p class="text-2xl font-bold text-slate-800">{{ card.value }}</p>
+              </div>
+            </div>
+          </ng-template>
+        </p-card>
+      }
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8" data-purpose="charts-section">
+      <p-card styleClass="lg:col-span-2 rounded-[10px] shadow-sm">
+        <ng-template pTemplate="content">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-slate-800">Phân bổ nhân sự theo dự án</h3>
+            <p-select
+              [options]="timeRanges"
+              [(ngModel)]="selectedTimeRange"
+              optionLabel="label"
+              optionValue="value"
+              styleClass="text-xs"
+              [style]="{ width: '140px' }"
+            />
+          </div>
+
+          <div class="h-64 relative">
+            <div
+              class="absolute bottom-0 left-0 right-0 h-full flex items-end justify-between px-4 pb-8 border-b border-gray-100"
+            >
+              <!-- Grid Lines -->
+              <div class="absolute inset-0 flex flex-col justify-between text-[10px] text-gray-300 pointer-events-none">
+                <span class="border-b border-gray-50 pb-1">25</span>
+                <span class="border-b border-gray-50 pb-1">20</span>
+                <span class="border-b border-gray-50 pb-1">15</span>
+                <span class="border-b border-gray-50 pb-1">10</span>
+                <span class="border-b border-gray-50 pb-1">5</span>
+                <span class="pb-1">0</span>
+              </div>
+
+              <!-- Bars -->
+              @for (item of barItems; track item.label) {
+                <div class="flex flex-col items-center group relative z-10 w-12">
+                  <div class="bg-evn-blue w-full rounded-t-sm" [style.height.%]="item.heightPercent"></div>
+                  <span class="mt-2 text-[10px] text-gray-500 text-center leading-tight">{{ item.label }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+
+      <!-- Donut Chart: Trạng thái dự án -->
+      <p-card styleClass="rounded-[10px] shadow-sm">
+        <ng-template pTemplate="content">
+          <h3 class="font-bold text-slate-800 mb-6">Trạng thái dự án</h3>
+
+          <div class="flex-1 flex flex-col justify-center items-center">
+            <div class="relative w-48 h-48 mb-8">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <!-- Background Circle -->
+                <circle cx="50" cy="50" fill="transparent" r="40" stroke="#f3f4f6" stroke-width="12"></circle>
+                <!-- Success Segment (65%) -->
+                <circle
+                  cx="50"
+                  cy="50"
+                  fill="transparent"
+                  r="40"
+                  stroke="#10B981"
+                  stroke-dasharray="163.36 251.32"
+                  stroke-dashoffset="0"
+                  stroke-width="12"
+                ></circle>
+                <!-- Warning Segment (25%) -->
+                <circle
+                  cx="50"
+                  cy="50"
+                  fill="transparent"
+                  r="40"
+                  stroke="#FBBF24"
+                  stroke-dasharray="62.83 251.32"
+                  stroke-dashoffset="-163.36"
+                  stroke-width="12"
+                ></circle>
+                <!-- Error Segment (10%) -->
+                <circle
+                  cx="50"
+                  cy="50"
+                  fill="transparent"
+                  r="40"
+                  stroke="#EF4444"
+                  stroke-dasharray="25.13 251.32"
+                  stroke-dashoffset="-226.19"
+                  stroke-width="12"
+                ></circle>
+              </svg>
+            </div>
+
+            <div class="w-full space-y-2 px-4">
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>
+                  <span class="text-gray-600">Đúng tiến độ</span>
+                </div>
+                <span class="font-bold">{{ donut.success }}%</span>
+              </div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-amber-400 mr-2"></span>
+                  <span class="text-gray-600">Rủi ro / Lưu ý</span>
+                </div>
+                <span class="font-bold">{{ donut.warning }}%</span>
+              </div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center">
+                  <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                  <span class="text-gray-600">Trễ tiến độ</span>
+                </div>
+                <span class="font-bold">{{ donut.error }}%</span>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </section>
+    <!-- END: Charts Row -->
+
+    <!-- BEGIN: Activity Table Section -->
+    <p-card styleClass="rounded-[10px] shadow-sm overflow-hidden" data-purpose="activity-table">
+      <ng-template pTemplate="content">
+        <div class="flex justify-between items-center border-b border-gray-50 pb-4">
+          <h3 class="font-bold text-slate-800">Hoạt động gần đây</h3>
+          <p-button styleClass="bg-evn-blue border-0 rounded-[10px] text-xs font-medium" label="Xem tất cả" />
+        </div>
+
+        <p-table
+          [value]="activityRows"
+          styleClass="mt-4"
+          [tableStyle]="{ width: '100%' }"
+          [rowHover]="true"
+        >
+          <ng-template pTemplate="header">
+            <tr class="text-[10px] uppercase text-gray-400 tracking-wider">
+              <th class="px-6 py-4 bg-gray-50">Tên Dự Án</th>
+              <th class="px-6 py-4 bg-gray-50">Hoạt Động</th>
+              <th class="px-6 py-4 bg-gray-50">Người Phụ Trách</th>
+              <th class="px-6 py-4 bg-gray-50">Trạng Thái</th>
+              <th class="px-6 py-4 bg-gray-50">Tiến Độ (%)</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-row>
+            <tr class="text-sm">
+              <td class="px-6 py-5 font-bold text-slate-800">{{ row.projectName }}</td>
+              <td class="px-6 py-5 text-gray-500">{{ row.activity }}</td>
+              <td class="px-6 py-5">
+                <div class="flex items-center">
+                  <div
+                    class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold mr-2"
+                  >
+                    {{ row.ownerInitials }}
+                  </div>
+                  <span class="text-gray-700">{{ row.ownerName }}</span>
+                </div>
+              </td>
+              <td class="px-6 py-5">
+                <span
+                  class="px-3 py-1 rounded-full text-[11px] font-bold"
+                  [class.status-badge-success]="row.statusClass === 'success'"
+                  [class.status-badge-warning]="row.statusClass === 'warning'"
+                  [class.status-badge-error]="row.statusClass === 'error'"
+                >
+                  {{ row.statusLabel }}
+                </span>
+              </td>
+              <td class="px-6 py-5">
+                <div class="flex items-center">
+                  <div class="flex-1 progress-bar-bg mr-3">
+                    <div
+                      class="progress-bar-fill"
+                      [class.opacity-70]="row.statusClass === 'warning'"
+                      [style.width.%]="row.progressPercent"
+                    ></div>
+                  </div>
+                  <span class="font-bold text-gray-700">{{ row.progressPercent }}%</span>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-template>
+    </p-card>
+    <!-- END: Activity Table Section -->
+  </main>
+  <!-- END: Main Content Area -->
+</div>
+

@@ -1,0 +1,77 @@
+<main class="evn-login-page" data-purpose="login-page">
+  <div class="evn-login-container" data-purpose="login-container">
+    <p-card styleClass="evn-login-card" data-purpose="login-card">
+      <ng-template pTemplate="content">
+        <div class="evn-brand" data-purpose="brand-identity">
+          <img
+            class="evn-logo"
+            src="/assets/images/logo_evn.png"
+            alt="Logo EVN"
+            loading="eager"
+            decoding="async"
+          />
+          <div class="evn-title">
+            <div class="evn-title__headline">Đăng nhập</div>
+            <div class="evn-title__sub">Vui lòng nhập thông tin tài khoản của bạn</div>
+          </div>
+        </div>
+
+        <form class="evn-form p-fluid" [formGroup]="form" (ngSubmit)="submit()">
+          <div class="evn-field">
+            <label class="evn-label" for="username">Tài khoản</label>
+            <div class="evn-input-with-icon">
+              <lucide-icon class="evn-input-icon" [img]="icons.user" [size]="18" />
+              <input
+                pInputText
+                class="evn-input"
+                id="username"
+                name="username"
+                placeholder="Nhập tài khoản hoặc email"
+                type="text"
+                formControlName="username"
+                autocomplete="username"
+              />
+            </div>
+          </div>
+
+          <div class="evn-field">
+            <label class="evn-label" for="password">Mật khẩu</label>
+            <div class="evn-input-with-icon">
+              <lucide-icon class="evn-input-icon" [img]="icons.lock" [size]="18" />
+              <p-password
+                inputId="password"
+                formControlName="password"
+                placeholder="Nhập mật khẩu"
+                [toggleMask]="true"
+                [feedback]="false"
+                [inputStyleClass]="'evn-input evn-input--password'"
+                autocomplete="current-password"
+              />
+            </div>
+          </div>
+
+          <div class="evn-row">
+            <div class="evn-remember">
+              <p-checkbox inputId="remember-me" [binary]="true" formControlName="rememberMe" />
+              <label class="evn-remember__label" for="remember-me">Ghi nhớ đăng nhập</label>
+            </div>
+          </div>
+
+          <p-button
+            styleClass="evn-submit w-full"
+            type="submit"
+            label="Đăng nhập"
+            [disabled]="form.invalid"
+          />
+
+          <p-divider align="center" type="solid" />
+
+          <!-- <div class="evn-footer">
+            <span>Chưa có tài khoản?</span>
+            <a href="#" (click)="$event.preventDefault()">Yêu cầu cấp mới</a>
+          </div> -->
+        </form>
+      </ng-template>
+    </p-card>
+  </div>
+</main>

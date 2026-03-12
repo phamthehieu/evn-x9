@@ -3,9 +3,9 @@ import { provideRouter } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeuix/themes/aura';
 
 import { routes } from './app.routes';
+import { EvnAuraPreset } from './evn.prime-preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +15,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: EvnAuraPreset,
+        options: {
+          darkModeSelector: '.app-dark'
+        }
       }
     })
   ]
