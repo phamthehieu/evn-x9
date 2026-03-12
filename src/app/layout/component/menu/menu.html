@@ -1,0 +1,14 @@
+<nav class="menu" [class.is-collapsed]="isCollapsed">
+  @for (item of items; track item.link) {
+    <a
+      class="menu-item"
+      [routerLink]="item.link"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+    >
+      <i class="bx" [ngClass]="item.icon"></i>
+      <span class="menu-label">{{ item.label }}</span>
+    </a>
+  }
+</nav>
+

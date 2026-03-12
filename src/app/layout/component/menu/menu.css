@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: color-mix(in srgb, var(--evn-blue) 80%, #e5e7eb);
+  transition: background-color 200ms ease, color 200ms ease;
+  width: 100%;
+  min-width: 0;
+}
+
+.menu-item i {
+  font-size: 20px;
+  flex: 0 0 auto;
+}
+
+.menu-item:hover {
+  background: var(--evn-blue);
+  color: var(--white);
+}
+
+.menu-item.is-active {
+  background: var(--evn-blue);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.menu.is-collapsed .menu-label {
+  display: none;
+}
+
+.menu.is-collapsed .menu-item {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.menu-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+

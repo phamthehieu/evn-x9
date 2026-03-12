@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Dashboard } from '../features/dashboard/dashboard';
+import { AppLayout } from '../layout/component/app-layout/app.layout';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -10,7 +10,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: Dashboard,
+    component: AppLayout,
     children: [
       {
         path: 'dashboard',

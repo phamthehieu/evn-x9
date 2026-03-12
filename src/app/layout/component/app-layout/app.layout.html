@@ -1,0 +1,51 @@
+<div class="main-layout">
+  <button
+    type="button"
+    class="drawer-overlay"
+    [class.is-open]="mobileDrawerOpen()"
+    (click)="closeMobileDrawer()"
+    aria-label="Close navigation"
+  ></button>
+
+  <aside
+    class="sidebar"
+    [class.is-collapsed]="sidebarCollapsed()"
+    [class.is-mobile-open]="mobileDrawerOpen()"
+  >
+    <button
+      type="button"
+      class="sidebar-trigger hide-on-mobile"
+      (click)="toggleSidebarCollapsed()"
+      aria-label="Toggle sidebar"
+    >
+      <i class="bx bx-chevron-left toggle-icon" [class.is-collapsed]="sidebarCollapsed()"></i>
+    </button>
+    <div class="sidebar-inner">
+      <div class="sidebar-top">
+        <a class="logo" [routerLink]="'/dashboard'">
+          <div class="logo-badge">
+            <img src="assets/images/logo_evn.png" alt="logo" />
+          </div>
+          <h1 class="logo-text">EVN X9</h1>
+        </a>
+
+        <button
+          type="button"
+          class="icon-btn show-on-mobile"
+          (click)="closeMobileDrawer()"
+          aria-label="Close drawer"
+        >
+          <i class="bx bx-x"></i>
+        </button>
+      </div>
+
+      <app-menu [isCollapsed]="sidebarCollapsed()"></app-menu>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="content-body">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
