@@ -1,14 +1,26 @@
 <nav class="menu" [class.is-collapsed]="isCollapsed">
-  @for (item of items; track item.link) {
-    <a
-      class="menu-item"
-      [routerLink]="item.link"
-      routerLinkActive="is-active"
-      [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
-    >
-      <i class="bx" [ngClass]="item.icon"></i>
-      <span class="menu-label">{{ item.label }}</span>
-    </a>
-  }
+  <div class="menu-items" aria-label="Navigation">
+    @for (item of items; track item.link) {
+      <a
+        class="menu-item"
+        [routerLink]="item.link"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+      >
+        <i class="bx" [ngClass]="item.icon"></i>
+        <span class="menu-label">{{ item.label }}</span>
+      </a>
+    }
+  </div>
+
+  <div class="menu-footer" aria-label="User information">
+    <div class="user-card">
+      <div class="user-avatar" aria-hidden="true">{{ avatarText }}</div>
+      <div class="user-meta">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-email">{{ userEmail }}</div>
+      </div>
+    </div>
+  </div>
 </nav>
 

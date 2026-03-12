@@ -1,0 +1,73 @@
+/* Custom scrollbar (sidebar / any internal scroll areas) */
+:host ::-webkit-scrollbar {
+  width: 4px;
+}
+
+:host ::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+/* Badge trạng thái */
+.status-badge-success {
+  background-color: #def7ec;
+  color: #03543f;
+}
+
+.status-badge-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge-error {
+  background-color: #fde8e8;
+  color: #9b1c1c;
+}
+
+/* Progress bar */
+.progress-bar-bg {
+  background-color: #e5e7eb;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.progress-bar-fill {
+  background-color: var(--evn-blue);
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* Dashboard cards entry animation */
+.dashboard-card {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  animation: dashboardFadeUp 480ms ease-out forwards;
+  will-change: opacity, transform;
+}
+
+/* Stagger cho 4 thẻ summary trên cùng */
+[data-purpose='summary-stats'] p-card:nth-child(1).dashboard-card {
+  animation-delay: 60ms;
+}
+[data-purpose='summary-stats'] p-card:nth-child(2).dashboard-card {
+  animation-delay: 120ms;
+}
+[data-purpose='summary-stats'] p-card:nth-child(3).dashboard-card {
+  animation-delay: 180ms;
+}
+[data-purpose='summary-stats'] p-card:nth-child(4).dashboard-card {
+  animation-delay: 240ms;
+}
+
+@keyframes dashboardFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+

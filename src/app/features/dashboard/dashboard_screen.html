@@ -7,7 +7,7 @@
 
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" data-purpose="summary-stats">
       @for (card of summaryCards; track card.label) {
-        <p-card styleClass="rounded-[10px] shadow-sm">
+        <p-card styleClass="rounded-[10px] shadow-sm dashboard-card dashboard-card--summary">
           <ng-template pTemplate="content">
             <div class="flex items-center">
               <div
@@ -35,7 +35,7 @@
     </section>
 
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8" data-purpose="charts-section">
-      <p-card styleClass="lg:col-span-2 rounded-[10px] shadow-sm">
+      <p-card styleClass="lg:col-span-2 rounded-[10px] shadow-sm dashboard-card">
         <ng-template pTemplate="content">
           <div class="flex justify-between items-center mb-6">
             <h3 class="font-bold text-slate-800">Phân bổ nhân sự theo dự án</h3>
@@ -76,7 +76,7 @@
       </p-card>
 
       <!-- Donut Chart: Trạng thái dự án -->
-      <p-card styleClass="rounded-[10px] shadow-sm">
+      <p-card styleClass="rounded-[10px] shadow-sm dashboard-card">
         <ng-template pTemplate="content">
           <h3 class="font-bold text-slate-800 mb-6">Trạng thái dự án</h3>
 
@@ -151,7 +151,7 @@
     <!-- END: Charts Row -->
 
     <!-- BEGIN: Activity Table Section -->
-    <p-card styleClass="rounded-[10px] shadow-sm overflow-hidden" data-purpose="activity-table">
+    <p-card styleClass="rounded-[10px] shadow-sm overflow-hidden dashboard-card" data-purpose="activity-table">
       <ng-template pTemplate="content">
         <div class="flex justify-between items-center border-b border-gray-50 pb-4">
           <h3 class="font-bold text-slate-800">Hoạt động gần đây</h3>

@@ -19,6 +19,8 @@ type MenuItem = {
 })
 export class Menu {
   @Input() isCollapsed = false;
+  @Input() userName = 'Quản trị viên';
+  @Input() userEmail = 'admin@projecthub.vn';
 
   private readonly router = inject(Router);
 
@@ -28,6 +30,11 @@ export class Menu {
 
   get selectedPath(): string {
     return this.router.url || '';
+  }
+
+  get avatarText(): string {
+    const ch = (this.userName || this.userEmail || 'U').trim().charAt(0);
+    return ch ? ch.toUpperCase() : 'U';
   }
 }
 

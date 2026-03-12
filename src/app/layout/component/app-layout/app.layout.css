@@ -50,6 +50,11 @@
   overflow-x: hidden;
 }
 
+.sidebar-inner > app-menu {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 .sidebar-top {
   display: flex;
   align-items: center;
@@ -57,6 +62,18 @@
   gap: 12px;
   margin-bottom: 18px;
   height: 44px;
+}
+
+.sidebar.is-collapsed .sidebar-top {
+  justify-content: center;
+}
+
+.sidebar.is-collapsed .logo {
+  justify-content: center;
+}
+
+.sidebar.is-collapsed .logo-badge {
+  margin: 0 auto;
 }
 
 .logo {

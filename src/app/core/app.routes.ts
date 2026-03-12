@@ -14,7 +14,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('../features/dashboard/dashboard').then((m) => m.Dashboard),
+        loadComponent: () => import('../features/dashboard/dashboard_screen').then((m) => m.Dashboard),
         data: { showMenu: true }
       }
     ]

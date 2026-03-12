@@ -45,8 +45,8 @@ type ActivityRow = {
   selector: 'app-dashboard',
   standalone: true,
   imports: [FormsModule, CardModule, ButtonModule, TableModule, SelectModule, LucideAngularModule],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
+  templateUrl: './dashboard_screen.html',
+  styleUrl: './dashboard_screen.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Dashboard {
