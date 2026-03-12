@@ -1,0 +1,125 @@
+/* Departments screen (used as tab content) */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.dep-left-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.dep-card {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  animation: depFadeUp 460ms ease-out forwards;
+  will-change: opacity, transform;
+}
+
+.dep-card--matrix {
+  animation-delay: 70ms;
+}
+
+.dep-card--tree {
+  flex: 2 1 0;
+}
+
+.dep-card--info {
+  flex: 1.2 1 0;
+}
+
+@keyframes depFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dep-table-head {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #94a3b8;
+  background: #f8fafc;
+}
+
+.dep-table-head th {
+  padding-top: 18px;
+  padding-bottom: 14px;
+}
+
+.dep-row {
+  border-top: 1px solid #edf2f7;
+}
+
+.dep-row:hover {
+  background-color: #f9fafb;
+}
+
+.dep-permission {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 2px solid #e2e8f0;
+  display: grid;
+  place-items: center;
+  color: #3853a4;
+}
+
+.dep-permission--active {
+  border-color: #3853a4;
+  background-color: rgba(56, 83, 164, 0.08);
+}
+
+.dep-matrix {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.dep-footer {
+  margin-top: auto;
+}
+
+:host ::ng-deep .dep-card--matrix.p-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .dep-card--matrix .p-card-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+:host ::ng-deep .dep-card--matrix .p-card-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+:host ::ng-deep .dep-card--matrix .dep-table {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .dep-card--matrix .p-datatable-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
