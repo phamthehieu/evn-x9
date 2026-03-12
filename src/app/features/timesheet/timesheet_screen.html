@@ -1,0 +1,203 @@
+<div class="bg-[var(--bg-main)] text-secondary text-slate-800">
+  <div class="p-6 md:p-8">
+    <header class="mb-4" data-purpose="page-header">
+      <h1 class="text-3xl font-bold text-slate-800">Khai báo công việc</h1>
+    </header>
+
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-[400px_1fr] lg:items-stretch">
+      <p-card styleClass="rounded-[12px] shadow-sm border border-slate-100 ts-equal-card ts-anim-card">
+        <ng-template pTemplate="content">
+          <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
+            <lucide-icon [img]="icons.form" [size]="18" class="text-evn-blue"></lucide-icon>
+            Nhập thông tin công việc
+          </h3>
+
+          <div class="space-y-7">
+            <div class="space-y-1.5">
+              <label class="text-sm font-semibold text-slate-700">Chọn dự án</label>
+              <p-select
+                [options]="projectOptions"
+                [(ngModel)]="selectedProject"
+                optionLabel="label"
+                optionValue="value"
+                [style]="{ width: '100%' }"
+              />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-sm font-semibold text-slate-700">Chọn hoạt động/giai đoạn</label>
+              <p-select
+                [options]="activityOptions"
+                [(ngModel)]="selectedActivity"
+                optionLabel="label"
+                optionValue="value"
+                [style]="{ width: '100%' }"
+              />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-sm font-semibold text-slate-700">Nội dung công việc</label>
+              <textarea
+                class="w-full rounded-[10px] border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-evn-blue/15 focus:border-evn-blue/30"
+                placeholder="Mô tả chi tiết công việc đã thực hiện..."
+                rows="4"
+                [(ngModel)]="taskContent"
+              ></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-1.5">
+                <label class="text-sm font-semibold text-slate-700">Bắt đầu</label>
+                <input
+                  class="w-full rounded-[10px] border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-evn-blue/15 focus:border-evn-blue/30"
+                  type="time"
+                  [(ngModel)]="startTime"
+                />
+              </div>
+              <div class="space-y-1.5">
+                <label class="text-sm font-semibold text-slate-700">Kết thúc</label>
+                <input
+                  class="w-full rounded-[10px] border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-evn-blue/15 focus:border-evn-blue/30"
+                  type="time"
+                  [(ngModel)]="endTime"
+                />
+              </div>
+            </div>
+
+            <p-button
+              styleClass="w-full bg-evn-blue border-0 rounded-[10px] text-sm font-semibold"
+              (onClick)="submit()"
+            >
+              <ng-template pTemplate="content">
+                <span class="inline-flex items-center justify-center gap-2 w-full py-1.5">
+                  <lucide-icon [img]="icons.send" [size]="16" class="text-white"></lucide-icon>
+                  <span class="text-white">Gửi báo cáo</span>
+                </span>
+              </ng-template>
+            </p-button>
+          </div>
+        </ng-template>
+      </p-card>
+
+      <section class="ts-today-summary ts-summary-card ts-anim-card p-6 rounded-[12px] shadow-md text-white lg:col-start-1">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="font-bold text-lg">Tổng kết hôm nay</h3>
+            <p class="text-white/70 text-sm capitalize">{{ todayLabel }}</p>
+          </div>
+          <lucide-icon [img]="icons.summary" [size]="28" class="opacity-70"></lucide-icon>
+        </div>
+        <div class="flex items-end justify-between mb-2">
+          <span class="text-3xl font-bold">{{ todayHours }}h</span>
+          <span class="text-sm font-medium text-white/80">Chỉ tiêu: 8h</span>
+        </div>
+        <div class="w-full bg-white/20 rounded-full h-2">
+          <div class="bg-white h-2 rounded-full" [style.width.%]="100"></div>
+        </div>
+        <p class="mt-4 text-xs text-white/75 italic flex items-center gap-1">
+          <lucide-icon [img]="icons.approved" [size]="14" class="opacity-90"></lucide-icon>
+          Bạn đã hoàn thành đủ số giờ làm việc tối thiểu.
+        </p>
+      </section>
+
+      <!-- Right Column: History Table & Stats -->
+      <p-card styleClass="rounded-[12px] shadow-sm border border-slate-100 overflow-hidden ts-equal-card ts-anim-card min-w-0 lg:col-start-2 lg:row-start-1">
+        <ng-template pTemplate="content">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-bold flex items-center gap-2">
+              <lucide-icon [img]="icons.history" [size]="18" class="text-evn-blue"></lucide-icon>
+              Lịch sử task trong tuần
+            </h3>
+            <div class="flex gap-2">
+              <p-select
+                [options]="rangeOptions"
+                [(ngModel)]="selectedRange"
+                optionLabel="label"
+                optionValue="value"
+                styleClass="text-xs"
+                [style]="{ width: '140px' }"
+              />
+            </div>
+          </div>
+
+          <p-table [value]="rows" styleClass="ts-table" [tableStyle]="{ width: '100%' }">
+            <ng-template pTemplate="header">
+              <tr class="ts-table-head">
+                <th class="px-6 py-4">Ngày</th>
+                <th class="px-6 py-4">Dự án</th>
+                <th class="px-6 py-4">Nội dung</th>
+                <th class="px-6 py-4">Tổng giờ</th>
+                <th class="px-6 py-4">Trạng thái</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+              <tr class="text-sm ts-row">
+                <td class="px-6 py-5">
+                  <p class="text-sm font-bold text-slate-800">{{ row.date }}</p>
+                  <p class="text-xs text-slate-500">{{ row.weekday }}</p>
+                </td>
+                <td class="px-6 py-5">
+                  <p class="text-sm font-semibold truncate max-w-[160px]">{{ row.project }}</p>
+                </td>
+                <td class="px-6 py-5">
+                  <p class="text-sm text-slate-600 line-clamp-1">{{ row.content }}</p>
+                </td>
+                <td class="px-6 py-5 text-sm font-bold">{{ row.hours }}h</td>
+                <td class="px-6 py-5">
+                  <span
+                    class="ts-badge"
+                    [class.ts-badge--approved]="row.status === 'approved'"
+                    [class.ts-badge--pending]="row.status === 'pending'"
+                    [class.ts-badge--rejected]="row.status === 'rejected'"
+                  >
+                    <span class="ts-dot"></span>
+                    {{ statusLabel(row.status) }}
+                  </span>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-template>
+      </p-card>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 min-w-0 lg:col-start-2 lg:row-start-2 ts-anim-group">
+        <p-card styleClass="rounded-[12px] shadow-sm border border-slate-100 ts-summary-card ts-anim-card">
+          <ng-template pTemplate="content">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="ts-stat-icon ts-stat-icon--approved">
+                <lucide-icon [img]="icons.approved" [size]="18"></lucide-icon>
+              </div>
+              <span class="text-sm font-semibold text-slate-500">Đã phê duyệt</span>
+            </div>
+            <p class="text-2xl font-bold">{{ approvedHours }}h</p>
+          </ng-template>
+        </p-card>
+
+        <p-card styleClass="rounded-[12px] shadow-sm border border-slate-100 ts-summary-card ts-anim-card">
+          <ng-template pTemplate="content">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="ts-stat-icon ts-stat-icon--pending">
+                <lucide-icon [img]="icons.history" [size]="18"></lucide-icon>
+              </div>
+              <span class="text-sm font-semibold text-slate-500">Đang chờ</span>
+            </div>
+            <p class="text-2xl font-bold">{{ pendingHours }}h</p>
+          </ng-template>
+        </p-card>
+
+        <p-card styleClass="rounded-[12px] shadow-sm border border-slate-100 ts-summary-card ts-anim-card">
+          <ng-template pTemplate="content">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="ts-stat-icon ts-stat-icon--total">
+                <lucide-icon [img]="icons.summary" [size]="18"></lucide-icon>
+              </div>
+              <span class="text-sm font-semibold text-slate-500">Tổng trong tuần</span>
+            </div>
+            <p class="text-2xl font-bold text-evn-blue">{{ weekTotalHours }}h</p>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>
+

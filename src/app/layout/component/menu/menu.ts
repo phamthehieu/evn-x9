@@ -26,6 +26,7 @@ export class Menu {
 
   readonly items: MenuItem[] = [
     { link: '/dashboard', icon: 'bx-home', label: 'Dashboard', exact: false },
+    { link: '/timesheet', icon: 'bx-time', label: 'Timesheet', exact: false },
   ];
 
   get selectedPath(): string {

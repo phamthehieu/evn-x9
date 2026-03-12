@@ -16,6 +16,11 @@ export const routes: Routes = [
         path: 'dashboard',
         loadComponent: () => import('../features/dashboard/dashboard_screen').then((m) => m.Dashboard),
         data: { showMenu: true }
+      },
+      {
+        path: 'timesheet',
+        loadComponent: () => import('../features/timesheet/timesheet_screen').then((m) => m.TimesheetScreen),
+        data: { showMenu: true }
       }
     ]
   }
