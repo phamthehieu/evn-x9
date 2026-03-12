@@ -25,8 +25,10 @@ export class Menu {
   private readonly router = inject(Router);
 
   readonly items: MenuItem[] = [
-    { link: '/dashboard', icon: 'bx-home', label: 'Dashboard', exact: false },
+    { link: '/dashboard', icon: 'bx-home', label: 'Tổng quan', exact: false },
     { link: '/timesheet', icon: 'bx-time', label: 'Timesheet', exact: false },
+    { link: '/project-list', icon: 'bx-folder', label: 'Dự án', exact: false },
+    { link: '/system-administration', icon: 'bx-cog', label: 'Quản trị hệ thống', exact: false },
   ];
 
   get selectedPath(): string {

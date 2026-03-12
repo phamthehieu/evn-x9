@@ -1,0 +1,120 @@
+/* Project list: card + badge + animation */
+
+.pj-card {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  animation: pjFadeUp 460ms ease-out forwards;
+  will-change: opacity, transform;
+}
+
+.pj-card--filters {
+  animation-delay: 60ms;
+}
+
+.pj-card--table {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.pj-table-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.pj-table-footer {
+  margin-top: auto;
+}
+
+:host ::ng-deep .pj-card--table .p-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+:host ::ng-deep .pj-card--table .p-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* PrimeNG Table wrapper phải flex để chiếm khoảng trống */
+:host ::ng-deep .pj-card--table .pj-table {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .pj-card--table .p-datatable-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+@keyframes pjFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pj-table-head {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  background: #f8fafc;
+}
+
+.pj-row {
+  border-top: 1px solid #f1f5f9;
+}
+
+.pj-row:hover {
+  background-color: #f9fafb;
+}
+
+.pj-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.pj-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.75;
+}
+
+.pj-badge--in-progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.pj-badge--completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.pj-badge--overdue {
+  background: #fee2e2;
+  color: #b91c1c;
+}

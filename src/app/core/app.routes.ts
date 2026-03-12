@@ -21,6 +21,16 @@ export const routes: Routes = [
         path: 'timesheet',
         loadComponent: () => import('../features/timesheet/timesheet_screen').then((m) => m.TimesheetScreen),
         data: { showMenu: true }
+      },
+      {
+        path: 'project-list',
+        loadComponent: () => import('../features/project/project_list/project_list_screen').then((m) => m.ProjectListScreen),
+        data: { showMenu: true }
+      },
+      {
+        path: 'system-administration',
+        loadComponent: () => import('../features/system_administration/system_administration_screen').then((m) => m.SystemAdministrationScreen),
+        data: { showMenu: true }
       }
     ]
   }
