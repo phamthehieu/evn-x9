@@ -1,0 +1,304 @@
+<div class="wbs-page flex flex-col min-h-0 flex-1 h-full">
+    <div class="wbs-sidebar-shell" [class.wbs-sidebar-shell--collapsed]="isFrameworkListCollapsed">
+      <p-card styleClass="wbs-card wbs-framework-card wbs-enter-card wbs-enter-card--sidebar">
+        <ng-template pTemplate="content">
+          <div class="wbs-framework-head">
+            @if (!isFrameworkListCollapsed) {
+              <h3 class="wbs-framework-title">Dự án mẫu</h3>
+            }
+            <div class="wbs-framework-head-actions">
+              @if (!isFrameworkListCollapsed) {
+                <button
+                  pButton
+                  type="button"
+                  class="wbs-framework-create-btn"
+                  (click)="createFrameworkTemplate()"
+                  title="Tạo mới dự án"
+                >
+                  <span class="p-button-icon p-button-icon-left">
+                    <lucide-icon [img]="icons.addCircle" [size]="14"></lucide-icon>
+                  </span>
+                  <span class="p-button-label">Tạo mới</span>
+                </button>
+              }
+
+              <button
+                pButton
+                type="button"
+                class="wbs-panel-toggle"
+                (click)="toggleFrameworkList()"
+                [title]="isFrameworkListCollapsed ? 'Mở danh sách khung dự án' : 'Thu gọn danh sách'"
+              >
+                <lucide-icon
+                  [img]="isFrameworkListCollapsed ? icons.expandPanel : icons.collapsePanel"
+                  [size]="16"
+                ></lucide-icon>
+              </button>
+            </div>
+          </div>
+
+          @if (!isFrameworkListCollapsed) {
+            <div class="wbs-framework-search-wrap">
+              <span class="wbs-framework-search-icon">
+                <lucide-icon [img]="icons.search" [size]="15"></lucide-icon>
+              </span>
+              <input
+                pInputText
+                type="text"
+                class="wbs-framework-search"
+                placeholder="Tìm kiếm dự án mẫu..."
+                [(ngModel)]="frameworkSearchValue"
+              />
+            </div>
+
+            <div class="wbs-framework-list">
+              @for (item of filteredFrameworkTemplates; track item.id) {
+                <button
+                  type="button"
+                  class="wbs-framework-item"
+                  [class.wbs-framework-item--active]="selectedFrameworkId === item.id"
+                  (click)="selectFrameworkTemplate(item)"
+                >
+                  <div class="wbs-framework-item-top">
+                    <span class="wbs-framework-item-name">{{ item.name }}</span>
+                    @if (item.popular) {
+                      <span class="wbs-framework-badge">Phổ biến</span>
+                    }
+                  </div>
+                  <p class="wbs-framework-item-desc">{{ item.description }}</p>
+                  <div class="wbs-framework-item-meta">
+                    <span>{{ item.workItems }} bước</span>
+                    <span>{{ item.slaDays }} ngày</span>
+                  </div>
+                </button>
+              }
+            </div>
+          }
+        </ng-template>
+      </p-card>
+    </div>
+
+    @if (hasSelectedFramework) {
+      <div #treeScrollContainer class="wbs-table-shell wbs-enter-card wbs-enter-card--table flex-1 min-h-0">
+        <p-card styleClass="wbs-card wbs-table-card">
+          <ng-template pTemplate="content">
+            <div class="wbs-tree-wrap">
+              <p-treeTable
+                #wbsTreeTable
+                [value]="wbsNodes"
+                [scrollable]="true"
+                scrollHeight="flex"
+                [rowHover]="true"
+                styleClass="wbs-tree-table"
+                [tableStyle]="{ width: '100%' }"
+              >
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 100px" />
+                <col />
+                <col style="width: 280px" />
+                <col style="width: 100px" />
+                <col style="width: 190px" />
+                <col style="width: 110px" />
+              </colgroup>
+            </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr class="wbs-head-row">
+              <th class="wbs-col-code">Mã WBS</th>
+              <th>Nội dung công việc</th>
+              <th class="wbs-col-unit">Đơn vị bàn giao</th>
+              <th class="wbs-col-sla">SLA (Ngày)</th>
+              <th class="wbs-col-pre">Ràng buộc</th>
+              <th class="wbs-col-actions text-right">Thao tác</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr
+              class="wbs-body-row"
+              [attr.data-level]="getNodeLevel(rowNode)"
+              [class.wbs-row--l1]="getNodeLevel(rowNode) === 1"
+              [class.wbs-row--l2]="getNodeLevel(rowNode) === 2"
+              [class.wbs-row--l3]="getNodeLevel(rowNode) === 3"
+              [class.wbs-row--l4]="getNodeLevel(rowNode) >= 4"
+              [class.wbs-row--drag-over]="isDragOver(rowNode)"
+              [class.wbs-row--drag-over-before]="isDragOverBefore(rowNode)"
+              [class.wbs-row--drag-over-after]="isDragOverAfter(rowNode)"
+              [class.wbs-row--dragging]="isDragging(rowNode)"
+              (dragover)="onRowDragOver($event, rowNode)"
+              (drop)="onRowDrop($event, rowNode)"
+            >
+              <td class="wbs-cell-code">
+                <span
+                  class="wbs-code-text"
+                  [class.wbs-code--l1]="getNodeLevel(rowNode) === 1"
+                  [class.wbs-code--l2]="getNodeLevel(rowNode) === 2"
+                  [class.wbs-code--l3]="getNodeLevel(rowNode) === 3"
+                  [class.wbs-code--l4]="getNodeLevel(rowNode) >= 4"
+                >{{ rowData.code }}</span>
+              </td>
+
+              <td class="wbs-cell-name">
+                <div
+                  class="wbs-name-wrap flex items-center gap-2 min-w-0"
+                  [attr.data-level]="getNodeLevel(rowNode)"
+                >
+                  <span
+                    class="wbs-grip"
+                    draggable="true"
+                    title="Giữ và kéo để đổi thứ tự"
+                    (dragstart)="onGripDragStart($event, rowNode)"
+                    (dragend)="onGripDragEnd()"
+                  >
+                    <lucide-icon [img]="icons.grip" [size]="16"></lucide-icon>
+                  </span>
+
+                  <p-treeTableToggler [rowNode]="rowNode" class="wbs-toggler"></p-treeTableToggler>
+
+                  <span
+                    class="wbs-level-icon"
+                    [class.wbs-level-icon--l1]="getNodeLevel(rowNode) === 1"
+                    [class.wbs-level-icon--l2]="getNodeLevel(rowNode) === 2"
+                    [class.wbs-level-icon--l3]="getNodeLevel(rowNode) === 3"
+                    [class.wbs-level-icon--l4]="getNodeLevel(rowNode) >= 4"
+                    [title]="'Level ' + getNodeLevel(rowNode)"
+                  >
+                    <lucide-icon [img]="getLevelIcon(rowNode)" [size]="13"></lucide-icon>
+                  </span>
+
+                  <input
+                    pInputText
+                    class="wbs-inline-input"
+                    [class.wbs-name--l1]="getNodeLevel(rowNode) === 1"
+                    [class.wbs-name--l2]="getNodeLevel(rowNode) === 2"
+                    [class.wbs-name--l4]="getNodeLevel(rowNode) >= 4"
+                    [(ngModel)]="rowData.name"
+                    type="text"
+                    [title]="rowData.name"
+                  />
+                </div>
+              </td>
+
+              <td class="wbs-cell-unit">
+                <p-select
+                  [options]="deliveryUnitOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [(ngModel)]="rowData.unit"
+                  [style]="{ width: '200px' }"
+                  styleClass="wbs-dropdown"
+                ></p-select>
+              </td>
+
+              <td class="wbs-cell-sla">
+                @if (isSlaReadonly(rowNode)) {
+                  <p-inputNumber
+                    [(ngModel)]="rowData.slaDays"
+                    [min]="0"
+                    [readonly]="true"
+                    styleClass="wbs-number wbs-number--readonly"
+                    [inputStyle]="{ width: '100%', textAlign: 'center' }"
+                  ></p-inputNumber>
+                } @else {
+                  <p-inputNumber
+                    [(ngModel)]="rowData.slaDays"
+                    [min]="0"
+                    styleClass="wbs-number"
+                    [inputStyle]="{ width: '100%', textAlign: 'center' }"
+                  ></p-inputNumber>
+                }
+              </td>
+
+              <td class="wbs-cell-pre">
+                @if (rowData.pre) {
+                  <p-tag
+                    severity="info"
+                    styleClass="wbs-pre-tag"
+                    [value]="'Pre: ' + rowData.pre"
+                  ></p-tag>
+                } @else {
+                  <button pButton type="button" class="wbs-link-btn" severity="secondary">
+                    <span class="p-button-icon p-button-icon-left">
+                      <lucide-icon [img]="icons.link" [size]="16"></lucide-icon>
+                    </span>
+                    <span class="p-button-label">Chọn bước trước</span>
+                  </button>
+                }
+              </td>
+
+              <td class="wbs-cell-actions">
+                <div class="flex items-center justify-end gap-1">
+                  <button
+                    pButton
+                    type="button"
+                    class="wbs-action-btn"
+                    (click)="addChild(rowNode)"
+                    title="Chẻ việc"
+                  >
+                    <lucide-icon [img]="icons.add" [size]="13"></lucide-icon>
+                  </button>
+                  <button
+                    pButton
+                    type="button"
+                    class="wbs-action-btn wbs-action-btn--danger"
+                    (click)="removeNode(rowNode)"
+                    title="Xóa"
+                  >
+                    <lucide-icon [img]="icons.delete" [size]="13"></lucide-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+              </p-treeTable>
+            </div>
+
+            <div class="wbs-add-root">
+              <button pButton type="button" class="wbs-add-root-btn" (click)="addRootItem()">
+                <span class="p-button-icon p-button-icon-left">
+                  <lucide-icon [img]="icons.addCircle" [size]="18"></lucide-icon>
+                </span>
+                <span class="p-button-label">Thêm danh mục công việc chính (Level 1)</span>
+              </button>
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
+
+      <div class="wbs-footer wbs-enter-card wbs-enter-card--footer">
+        <div class="wbs-footer-left">
+          <div class="wbs-metric">
+            <div class="wbs-metric-label">Tổng số đầu việc</div>
+            <div class="wbs-metric-value">
+              <span class="wbs-metric-number">{{ totalWorkItems }}</span>
+              <span class="wbs-metric-unit">hạng mục</span>
+            </div>
+          </div>
+          <div class="wbs-footer-sep"></div>
+          <div class="wbs-metric">
+            <div class="wbs-metric-label">Tổng SLA dự kiến</div>
+            <div class="wbs-metric-value wbs-metric-value--primary">
+              <span class="wbs-metric-number">{{ totalSlaDays }}</span>
+              <span class="wbs-metric-unit">ngày làm việc</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wbs-footer-right">
+          <button
+            pButton
+            type="button"
+            class="wbs-footer-cancel"
+            severity="secondary"
+            (click)="cancelConfig()"
+          >
+            Hủy cấu hình
+          </button>
+          <button pButton type="button" class="wbs-footer-primary" (click)="activateWorkflow()">
+            Hoàn tất &amp; Kích hoạt
+          </button>
+        </div>
+      </div>
+    }
+</div>

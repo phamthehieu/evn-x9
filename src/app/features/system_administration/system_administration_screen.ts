@@ -9,6 +9,7 @@ import { UserPlus, Users, LucideAngularModule } from 'lucide-angular';
 
 import { SystemUserScreen } from './system_user/system_user_screen';
 import { SystemDepartmentsScreen } from './system_departments/system_departments';
+import { SystemProjectFrameworkScreen } from './system_project_framework/system_project_framework';
 
 type AdminTab = 'users' | 'departments' | 'framework' | 'masterProfile';
 
@@ -20,7 +21,7 @@ type Option<T extends string = string> = {
 @Component({
   selector: 'app-system-administration',
   standalone: true,
-  imports: [CommonModule, FormsModule, CardModule, ButtonModule, SystemUserScreen, SystemDepartmentsScreen, LucideAngularModule],
+  imports: [CommonModule, FormsModule, CardModule, ButtonModule, SystemUserScreen, SystemDepartmentsScreen, SystemProjectFrameworkScreen, LucideAngularModule],
   templateUrl: './system_administration_screen.html',
   styleUrl: './system_administration_screen.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

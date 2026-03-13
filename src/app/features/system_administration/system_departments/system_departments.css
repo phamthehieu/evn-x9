@@ -79,6 +79,7 @@
 .dep-permission--active {
   border-color: #3853a4;
   background-color: rgba(56, 83, 164, 0.08);
+  box-shadow: 0 6px 18px rgba(56, 83, 164, 0.12);
 }
 
 .dep-matrix {
@@ -89,6 +90,11 @@
 
 .dep-footer {
   margin-top: auto;
+}
+
+/* Footer nhìn "gọn" hơn, giống tab user */
+.dep-footer button {
+  min-width: 120px;
 }
 
 :host ::ng-deep .dep-card--matrix.p-card {
