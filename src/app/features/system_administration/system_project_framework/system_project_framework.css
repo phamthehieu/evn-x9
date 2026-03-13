@@ -181,6 +181,7 @@
   text-align: left;
   cursor: pointer;
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  margin-bottom: 10px;
 }
 
 .wbs-framework-item:hover {
@@ -969,4 +970,124 @@
 
 .wbs-name-wrap {
   position: relative;
+}
+
+/* Create template dialog */
+
+:host ::ng-deep .wbs-create-dialog .p-dialog-header {
+  padding: 16px 20px 10px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+:host ::ng-deep .wbs-create-dialog .p-dialog-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.92);
+}
+
+:host ::ng-deep .wbs-create-dialog .p-dialog-content {
+  padding: 18px 20px 16px;
+}
+
+.wbs-create-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.wbs-create-form-card {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 12px;
+  background: #fff;
+  padding: 18px;
+}
+
+.wbs-create-title {
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.9);
+}
+
+.wbs-create-title lucide-icon {
+  color: var(--evn-blue, #3853a4);
+}
+
+.wbs-create-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.wbs-create-field--full {
+  grid-column: 1 / -1;
+}
+
+.wbs-create-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.55);
+}
+
+.wbs-create-input,
+.wbs-create-textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: #fff;
+  font-size: 13px;
+}
+
+.wbs-create-input {
+  height: 40px;
+}
+
+.wbs-create-textarea {
+  resize: vertical;
+  min-height: 76px;
+}
+
+.wbs-create-input--disabled {
+  background: rgba(15, 23, 42, 0.04);
+  color: rgba(15, 23, 42, 0.56);
+}
+
+.wbs-create-footer {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+:host ::ng-deep .wbs-create-cancel-btn.p-button {
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  background: #fff;
+  color: rgba(15, 23, 42, 0.72);
+  font-weight: 700;
+}
+
+:host ::ng-deep .wbs-create-cancel-btn.p-button:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+:host ::ng-deep .wbs-create-submit-btn.p-button {
+  border-radius: 10px;
+  background: var(--evn-blue, #3853a4);
+  border: 1px solid transparent;
+  color: #fff;
+  font-weight: 800;
+}
+
+:host ::ng-deep .wbs-create-submit-btn.p-button:enabled:hover {
+  filter: brightness(0.95);
 }

@@ -12,10 +12,12 @@ import { FormsModule } from '@angular/forms';
 import { TreeNode } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
+import { TextareaModule } from 'primeng/textarea';
 import { TreeTable, TreeTableModule } from 'primeng/treetable';
 
 import {
@@ -29,6 +31,7 @@ import {
   Folder,
   FolderOpen,
   GripVertical,
+  Info,
   Link2,
   Paperclip,
   PlusCircle,
@@ -62,10 +65,19 @@ type DropPlacement = 'before' | 'after';
 type FrameworkTemplate = {
   id: string;
   name: string;
+  typeCode?: string;
+  createdBy?: string;
   description: string;
   workItems: number;
   slaDays: number;
   popular?: boolean;
+};
+
+type NewFrameworkTemplateForm = {
+  name: string;
+  typeCode: string;
+  createdBy: string;
+  description: string;
 };
 
 @Component({
@@ -77,7 +89,9 @@ type FrameworkTemplate = {
     CardModule,
     TreeTableModule,
     ButtonModule,
+    DialogModule,
     InputTextModule,
+    TextareaModule,
     SelectModule,
     InputNumberModule,
     TagModule,
@@ -111,6 +125,7 @@ export class SystemProjectFrameworkScreen {
     add: PlusSquare,
     addCircle: PlusCircle,
     delete: Trash2,
+    info: Info,
   };
 
   protected readonly deliveryUnitOptions: DeliveryUnitOption[] = [
@@ -129,6 +144,12 @@ export class SystemProjectFrameworkScreen {
   protected dragOverNodeKey: string | null = null;
   protected dragOverPlacement: DropPlacement = 'before';
   private dragGhostEl: HTMLElement | null = null;
+  protected isCreateFrameworkDialogOpen = false;
+  protected readonly defaultTemplateSummary = {
+    workItems: 14,
+    slaDays: 45,
+  };
+  protected newFrameworkTemplateForm: NewFrameworkTemplateForm = this.getDefaultTemplateForm();
 
   protected wbsNodes: TreeNode<WbsRow>[] = [
     {
@@ -255,17 +276,36 @@ export class SystemProjectFrameworkScreen {
   }
 
   protected createFrameworkTemplate(): void {
-    const nextNumber = this.frameworkTemplates.length + 1;
+    this.newFrameworkTemplateForm = this.getDefaultTemplateForm();
+    this.isCreateFrameworkDialogOpen = true;
+  }
+
+  protected closeCreateFrameworkDialog(): void {
+    this.isCreateFrameworkDialogOpen = false;
+  }
+
+  protected submitCreateFrameworkTemplate(): void {
+    const templateName = this.newFrameworkTemplateForm.name.trim();
+    const typeCode = this.newFrameworkTemplateForm.typeCode.trim();
+    const description = this.newFrameworkTemplateForm.description.trim();
+    if (!templateName || !typeCode) return;
+
     const item: FrameworkTemplate = {
       id: `project-type-${Date.now()}`,
-      name: `Dự án mới ${nextNumber}`,
-      description: 'Khung dự án mới được tạo. Vui lòng cập nhật thông tin và cấu trúc đầu việc.',
-      workItems: 0,
-      slaDays: 0,
+      name: templateName,
+      typeCode,
+      createdBy: this.newFrameworkTemplateForm.createdBy,
+      description:
+        description || 'Khung dự án mới được tạo. Vui lòng cập nhật thông tin và cấu trúc đầu việc.',
+      workItems: this.defaultTemplateSummary.workItems,
+      slaDays: this.defaultTemplateSummary.slaDays,
+      popular: false,
     };
+
     this.frameworkTemplates.unshift(item);
     this.selectedFrameworkId = item.id;
     this.frameworkSearchValue = '';
+    this.isCreateFrameworkDialogOpen = false;
   }
 
   protected expandAll(): void {
@@ -597,5 +637,14 @@ export class SystemProjectFrameworkScreen {
   private getNode(node: TreeNode<WbsRow> | { node: TreeNode<WbsRow> }): TreeNode<WbsRow> | null {
     if (!node) return null;
     return 'node' in node ? node.node : node;
+  }
+
+  private getDefaultTemplateForm(): NewFrameworkTemplateForm {
+    return {
+      name: '',
+      typeCode: '',
+      createdBy: 'Phòng Kỹ Thuật',
+      description: '',
+    };
   }
 }

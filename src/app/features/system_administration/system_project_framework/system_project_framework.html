@@ -162,7 +162,7 @@
                     [class.wbs-level-icon--l2]="getNodeLevel(rowNode) === 2"
                     [class.wbs-level-icon--l3]="getNodeLevel(rowNode) === 3"
                     [class.wbs-level-icon--l4]="getNodeLevel(rowNode) >= 4"
-                    [title]="'Level ' + getNodeLevel(rowNode)"
+                    [title]="'Cấp ' + getNodeLevel(rowNode)"
                   >
                     <lucide-icon [img]="getLevelIcon(rowNode)" [size]="13"></lucide-icon>
                   </span>
@@ -215,7 +215,7 @@
                   <p-tag
                     severity="info"
                     styleClass="wbs-pre-tag"
-                    [value]="'Pre: ' + rowData.pre"
+                    [value]="'Bước trước: ' + rowData.pre"
                   ></p-tag>
                 } @else {
                   <button pButton type="button" class="wbs-link-btn" severity="secondary">
@@ -259,7 +259,7 @@
                 <span class="p-button-icon p-button-icon-left">
                   <lucide-icon [img]="icons.addCircle" [size]="18"></lucide-icon>
                 </span>
-                <span class="p-button-label">Thêm danh mục công việc chính (Level 1)</span>
+                <span class="p-button-label">Thêm danh mục công việc chính (Cấp 1)</span>
               </button>
             </div>
           </ng-template>
@@ -302,3 +302,84 @@
       </div>
     }
 </div>
+
+<p-dialog
+  [(visible)]="isCreateFrameworkDialogOpen"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  [style]="{ width: '980px', maxWidth: '95vw' }"
+  styleClass="wbs-create-dialog"
+  header="Tạo mới dự án mẫu"
+>
+  <div class="wbs-create-grid">
+    <section class="wbs-create-form-card">
+      <h2 class="wbs-create-title">
+        <lucide-icon [img]="icons.info" [size]="18"></lucide-icon>
+        <span>Thông tin chung</span>
+      </h2>
+
+      <div class="wbs-create-form-grid">
+        <div class="wbs-create-field wbs-create-field--full">
+          <label class="wbs-create-label">Tên dự án mẫu</label>
+          <input
+            pInputText
+            [(ngModel)]="newFrameworkTemplateForm.name"
+            class="wbs-create-input"
+            type="text"
+            placeholder="Ví dụ: Mẫu bảo trì trạm 110kV"
+          />
+        </div>
+
+        <div class="wbs-create-field">
+          <label class="wbs-create-label">Mã loại</label>
+          <input
+            pInputText
+            [(ngModel)]="newFrameworkTemplateForm.typeCode"
+            class="wbs-create-input"
+            type="text"
+            placeholder="EVN-WBS-2024"
+          />
+        </div>
+
+        <div class="wbs-create-field">
+          <label class="wbs-create-label">Đơn vị tạo</label>
+          <input
+            pInputText
+            [(ngModel)]="newFrameworkTemplateForm.createdBy"
+            class="wbs-create-input wbs-create-input--disabled"
+            type="text"
+            [disabled]="true"
+          />
+        </div>
+
+        <div class="wbs-create-field wbs-create-field--full">
+          <label class="wbs-create-label">Mô tả ngắn</label>
+          <textarea
+            pTextarea
+            [(ngModel)]="newFrameworkTemplateForm.description"
+            class="wbs-create-textarea"
+            rows="2"
+            placeholder="Mô tả mục đích của mẫu dự án..."
+          ></textarea>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wbs-create-footer">
+    <button pButton type="button" class="wbs-create-cancel-btn" (click)="closeCreateFrameworkDialog()">
+      Hủy
+    </button>
+    <button
+      pButton
+      type="button"
+      class="wbs-create-submit-btn"
+      [disabled]="!newFrameworkTemplateForm.name.trim() || !newFrameworkTemplateForm.typeCode.trim()"
+      (click)="submitCreateFrameworkTemplate()"
+    >
+      Tạo mới
+    </button>
+  </div>
+</p-dialog>
