@@ -23,6 +23,18 @@
             optionValue="value"
             [style]="{ minWidth: '220px' }"
           />
+
+          <p-button
+            styleClass="bg-evn-blue border-0 rounded-[10px] text-sm font-semibold whitespace-nowrap"
+            (onClick)="addUser()"
+          >
+            <ng-template pTemplate="content">
+              <span class="inline-flex items-center gap-2 px-3 py-1.5">
+                <lucide-icon [img]="icons.add" [size]="16" class="text-white"></lucide-icon>
+                <span class="text-white">Thêm người dùng mới</span>
+              </span>
+            </ng-template>
+          </p-button>
         </div>
       </div>
     </div>

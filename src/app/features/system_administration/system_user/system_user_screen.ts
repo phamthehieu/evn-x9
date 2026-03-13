@@ -7,7 +7,7 @@ import { CardModule } from 'primeng/card';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 
-import { Lock, LockOpen, Pencil, Search, LucideAngularModule } from 'lucide-angular';
+import { Lock, LockOpen, Pencil, Search, UserPlus, LucideAngularModule } from 'lucide-angular';
 
 type Option<T extends string = string> = {
   label: string;
@@ -40,6 +40,7 @@ export class SystemUserScreen {
     edit: Pencil,
     lock: Lock,
     unlock: LockOpen,
+    add: UserPlus,
   };
 
   searchTerm = '';
@@ -126,6 +127,7 @@ export class SystemUserScreen {
   }
 
   // UI mock
+  addUser(): void {}
   editUser(_row: UserRow): void {}
   toggleLock(_row: UserRow): void {}
 }
